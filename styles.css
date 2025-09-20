@@ -1,0 +1,1227 @@
+/* ============================================================================
+   DYNAMIC INTERACTIVE WEB EXPERIENCE - CSS3 ANIMATIONS & TRANSITIONS
+   Assignment: Bringing Web Pages to Life with CSS & JavaScript
+   ============================================================================ */
+
+/* ============================================================================
+   PART 1: BASE STYLES & CSS VARIABLES
+   ============================================================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Color Palette */
+    --primary-color: #667eea;
+    --secondary-color: #764ba2;
+    --accent-color: #f093fb;
+    --success-color: #4ecdc4;
+    --warning-color: #ffc107;
+    --danger-color: #e74c3c;
+    --info-color: #3498db;
+    --dark-color: #2c3e50;
+    --light-color: #ecf0f1;
+    --white: #ffffff;
+    
+    /* Gradients */
+    --gradient-main: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    --gradient-accent: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+    --gradient-rainbow: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    
+    /* Shadows */
+    --shadow-light: 0 2px 10px rgba(0,0,0,0.1);
+    --shadow-medium: 0 4px 20px rgba(0,0,0,0.15);
+    --shadow-heavy: 0 8px 30px rgba(0,0,0,0.25);
+    --shadow-neon: 0 0 20px rgba(102, 126, 234, 0.6);
+    
+    /* Borders and Spacing */
+    --border-radius: 12px;
+    --border-radius-small: 6px;
+    --border-radius-large: 20px;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease-out;
+    --transition-medium: 0.4s ease-out;
+    --transition-slow: 0.6s ease-out;
+    --transition-bounce: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--dark-color);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ============================================================================
+   PART 1: ANIMATED HEADERS & TITLES (CSS KEYFRAME ANIMATIONS)
+   ============================================================================ */
+
+.main-header {
+    text-align: center;
+    padding: 3rem 0;
+    margin-bottom: 2rem;
+}
+
+.animated-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    background: linear-gradient(45deg, #fff, #f0f8ff, #e6e6fa, #fff, #f0f0ff);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 4s ease-in-out infinite, textGlow 2s ease-in-out infinite alternate;
+    text-shadow: 0 0 30px rgba(255,255,255,0.5);
+    margin-bottom: 1rem;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes textGlow {
+    from { 
+        filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+        transform: scale(1);
+    }
+    to { 
+        filter: drop-shadow(0 0 20px rgba(255,255,255,0.6));
+        transform: scale(1.02);
+    }
+}
+
+.subtitle {
+    color: rgba(255,255,255,0.9);
+    font-size: 1.3rem;
+    animation: fade-in-up 1s ease-out 0.5s both;
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================================================
+   PART 1: SECTION LAYOUTS WITH TRANSITIONS
+   ============================================================================ */
+
+.section {
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius-large);
+    padding: 3rem;
+    margin-bottom: 3rem;
+    box-shadow: var(--shadow-medium);
+    transition: all var(--transition-medium);
+    animation: slideInFromLeft 0.8s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.8s ease-in-out;
+}
+
+.section:hover::before {
+    left: 100%;
+}
+
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.section:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-heavy);
+    background: rgba(255,255,255,0.98);
+}
+
+.section-title {
+    font-size: 2.2rem;
+    margin-bottom: 2.5rem;
+    color: var(--primary-color);
+    position: relative;
+    padding-bottom: 1rem;
+    animation: titleSlide 0.8s ease-out 0.3s both;
+}
+
+@keyframes titleSlide {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 4px;
+    background: var(--gradient-main);
+    transition: width var(--transition-medium);
+    border-radius: 2px;
+}
+
+.section:hover .section-title::after {
+    width: 120px;
+}
+
+.demo-group {
+    margin-bottom: 3rem;
+}
+
+.demo-group h3 {
+    color: var(--secondary-color);
+    margin-bottom: 2rem;
+    font-size: 1.4rem;
+    position: relative;
+    padding-left: 20px;
+}
+
+.demo-group h3::before {
+    content: '▶';
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+    transition: transform var(--transition-fast);
+}
+
+.demo-group:hover h3::before {
+    transform: scale(1.2);
+}
+
+/* ============================================================================
+   PART 1: BUTTON HOVER EFFECTS & TRANSITIONS
+   ============================================================================ */
+
+.btn {
+    background: var(--gradient-main);
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+    margin: 0.5rem;
+    box-shadow: var(--shadow-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.2);
+    transition: left var(--transition-medium);
+    z-index: 1;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+/* Specific Button Hover Effects */
+.btn-hover-scale {
+    transition: transform var(--transition-medium);
+}
+
+.btn-hover-scale:hover {
+    transform: scale(1.15);
+    box-shadow: var(--shadow-heavy);
+}
+
+.btn-hover-slide {
+    transition: all var(--transition-medium);
+}
+
+.btn-hover-slide:hover {
+    transform: translateX(15px);
+    background: var(--gradient-accent);
+}
+
+.btn-hover-rotate {
+    transition: transform var(--transition-medium);
+}
+
+.btn-hover-rotate:hover {
+    transform: rotate(8deg) scale(1.1);
+    background: linear-gradient(135deg, var(--success-color), var(--info-color));
+}
+
+.btn-hover-glow {
+    transition: all var(--transition-medium);
+}
+
+.btn-hover-glow:hover {
+    box-shadow: var(--shadow-neon), var(--shadow-heavy);
+    transform: translateY(-4px);
+    background: linear-gradient(135deg, var(--accent-color), var(--warning-color));
+}
+
+.btn-hover-bounce {
+    transition: all var(--transition-bounce);
+}
+
+.btn-hover-bounce:hover {
+    transform: translateY(-8px);
+    animation: bounceHover 0.6s ease-in-out;
+}
+
+@keyframes bounceHover {
+    0%, 100% { transform: translateY(-8px); }
+    50% { transform: translateY(-12px); }
+}
+
+.button-showcase {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+/* ============================================================================
+   PART 1: CONTINUOUS KEYFRAME ANIMATIONS
+   ============================================================================ */
+
+.animation-showcase {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    justify-content: center;
+    padding: 3rem;
+    background: rgba(255,255,255,0.1);
+    border-radius: var(--border-radius);
+    margin: 2rem 0;
+}
+
+.floating-box {
+    width: 100px;
+    height: 100px;
+    background: var(--gradient-accent);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    animation: floating 3s ease-in-out infinite;
+    box-shadow: var(--shadow-medium);
+}
+
+@keyframes floating {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-25px); }
+}
+
+.pulsing-circle {
+    width: 100px;
+    height: 100px;
+    background: var(--success-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    animation: pulsing 2s ease-in-out infinite;
+    box-shadow: var(--shadow-medium);
+}
+
+@keyframes pulsing {
+    0%, 100% { 
+        transform: scale(1); 
+        opacity: 1; 
+        box-shadow: 0 0 0 0 rgba(78, 205, 196, 0.7);
+    }
+    50% { 
+        transform: scale(1.3); 
+        opacity: 0.8;
+        box-shadow: 0 0 0 20px rgba(78, 205, 196, 0);
+    }
+}
+
+.rotating-square {
+    width: 100px;
+    height: 100px;
+    background: var(--warning-color);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    animation: rotating 4s linear infinite;
+    box-shadow: var(--shadow-medium);
+}
+
+@keyframes rotating {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.bouncing-ball {
+    width: 100px;
+    height: 100px;
+    background: var(--danger-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    animation: bouncing 1.5s ease-in-out infinite;
+    box-shadow: var(--shadow-medium);
+}
+
+@keyframes bouncing {
+    0%, 100% { 
+        transform: translateY(0) scale(1); 
+        border-radius: 50%;
+    }
+    25% { 
+        transform: translateY(-30px) scale(0.9); 
+        border-radius: 50%;
+    }
+    50% { 
+        transform: translateY(-40px) scale(1.1); 
+        border-radius: 45%;
+    }
+    75% { 
+        transform: translateY(-30px) scale(0.9); 
+        border-radius: 50%;
+    }
+}
+
+.color-shifting {
+    width: 100px;
+    height: 100px;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    animation: colorShift 3s ease-in-out infinite;
+    box-shadow: var(--shadow-medium);
+}
+
+@keyframes colorShift {
+    0% { background: #ff0000; }
+    16.67% { background: #ff8c00; }
+    33.33% { background: #ffd700; }
+    50% { background: #32cd32; }
+    83.33% { background: #8a2be2; }
+    100% { background: #ff0000; }
+}
+
+/* ============================================================================
+   PART 1: SMOOTH TRANSITION CARDS
+   ============================================================================ */
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.transition-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    text-align: center;
+    box-shadow: var(--shadow-light);
+    transition: all var(--transition-medium);
+    cursor: pointer;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.transition-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, transparent, var(--primary-color), transparent);
+    animation: rotate 3s linear infinite;
+    opacity: 0;
+    transition: opacity var(--transition-medium);
+}
+
+.transition-card::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: white;
+    border-radius: var(--border-radius);
+}
+
+.transition-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+.transition-card:hover::before {
+    opacity: 1;
+}
+
+.transition-card:hover {
+    transform: translateY(-12px) rotateX(15deg);
+    box-shadow: var(--shadow-heavy);
+    border-color: var(--primary-color);
+}
+
+.transition-card:nth-child(2):hover {
+    background: linear-gradient(135deg, #fff, #f0f8ff);
+    color: var(--primary-color);
+}
+
+.transition-card:nth-child(3):hover {
+    transform: translateY(-12px) rotateY(15deg);
+    background: linear-gradient(135deg, #fff, #f8f0ff);
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ============================================================================
+   PART 2: FUNCTION DEMO STYLES
+   ============================================================================ */
+
+.function-demo {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--primary-color);
+}
+
+.calculator-section, .text-processor-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+}
+
+.input-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    align-items: center;
+}
+
+.input-group input, .input-group select {
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: var(--border-radius-small);
+    font-size: 1rem;
+    transition: all var(--transition-fast);
+    flex: 1;
+    min-width: 120px;
+}
+
+.input-group input:focus, .input-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    transform: scale(1.02);
+}
+
+.text-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.btn-small {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+.result-display {
+    background: white;
+    padding: 1.5rem;
+    border-radius: var(--border-radius-small);
+    border: 2px solid #e9ecef;
+    font-size: 1.1rem;
+    transition: all var(--transition-fast);
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.result-value {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.scope-demo {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--success-color);
+}
+
+.scope-display {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.scope-info {
+    background: white;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+}
+
+.scope-info span {
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
+.utility-demo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--info-color);
+}
+
+.color-generator, .array-processor {
+    background: white;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+    text-align: center;
+}
+
+.color-display {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+.color-box {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--border-radius);
+    border: 2px solid #ddd;
+    transition: all var(--transition-medium);
+    box-shadow: var(--shadow-light);
+}
+
+.array-display {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: var(--border-radius-small);
+}
+
+.array-value {
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* ============================================================================
+   PART 3: JAVASCRIPT-TRIGGERED ANIMATIONS
+   ============================================================================ */
+
+.animation-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.animation-target {
+    width: 250px;
+    height: 250px;
+    background: var(--gradient-main);
+    border-radius: var(--border-radius-large);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem auto;
+    color: white;
+    text-align: center;
+    transition: all var(--transition-medium);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-medium);
+}
+
+.animation-content {
+    z-index: 2;
+    position: relative;
+}
+
+.animation-icon {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+/* JavaScript-triggered animation classes */
+.animate-bounce {
+    animation: jsBounce 0.8s ease-in-out;
+}
+
+@keyframes jsBounce {
+    0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-40px); }
+    50% { transform: translateY(-20px); }
+    75% { transform: translateY(-40px); }
+}
+
+.animate-shake {
+    animation: jsShake 0.6s ease-in-out;
+}
+
+@keyframes jsShake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-15px); }
+    20%, 40%, 60%, 80% { transform: translateX(15px); }
+}
+
+.animate-flip {
+    animation: jsFlip 1s ease-in-out;
+}
+
+@keyframes jsFlip {
+    0% { transform: rotateY(0) rotateX(0); }
+    25% { transform: rotateY(90deg) rotateX(0); }
+    50% { transform: rotateY(180deg) rotateX(180deg); }
+    75% { transform: rotateY(270deg) rotateX(180deg); }
+    100% { transform: rotateY(360deg) rotateX(360deg); }
+}
+
+.animate-zoom {
+    animation: jsZoom 0.8s ease-in-out;
+}
+
+@keyframes jsZoom {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.5); }
+}
+
+.animate-rainbow {
+    animation: jsRainbow 2s ease-in-out;
+}
+
+@keyframes jsRainbow {
+    0% { background: var(--gradient-main); }
+    20% { background: linear-gradient(135deg, #ff0000, #ff8c00); }
+    40% { background: linear-gradient(135deg, #ffd700, #32cd32); }
+    60% { background: linear-gradient(135deg, #1e90ff, #8a2be2); }
+    80% { background: linear-gradient(135deg, #ff1493, #00ced1); }
+    100% { background: var(--gradient-main); }
+}
+
+.btn-reset {
+    background: var(--danger-color);
+}
+
+.btn-danger {
+    background: var(--danger-color);
+}
+
+/* ============================================================================
+   PART 3: CARD FLIP ANIMATIONS
+   ============================================================================ */
+
+.card-flip-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.flip-card {
+    background-color: transparent;
+    width: 100%;
+    height: 300px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: var(--border-radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-medium);
+    padding: 2rem;
+}
+
+.flip-card-front {
+    background: var(--gradient-main);
+    color: white;
+}
+
+.flip-card-back {
+    background: var(--gradient-accent);
+    color: white;
+    transform: rotateY(180deg);
+}
+
+.card-icon {
+    font-size: 4rem;
+    margin: 1rem 0;
+}
+
+/* ============================================================================
+   PART 3: MODAL ANIMATIONS
+   ============================================================================ */
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.modal-overlay.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    border-radius: var(--border-radius);
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-heavy);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #999;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.modal-close:hover {
+    color: var(--danger-color);
+    transform: scale(1.1);
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+/* Modal Animation Classes */
+.modal-slideIn {
+    animation: modalSlideIn 0.5s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-fadeIn {
+    animation: modalFadeIn 0.5s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.modal-zoomIn {
+    animation: modalZoomIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes modalZoomIn {
+    from {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ============================================================================
+   PART 3: LOADING ANIMATIONS
+   ============================================================================ */
+
+.loading-container {
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    border-radius: var(--border-radius);
+    margin-top: 2rem;
+    position: relative;
+}
+
+.loading-message {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.dots-loader {
+    display: flex;
+    gap: 8px;
+}
+
+.dots-loader div {
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    animation: dotBounce 1.4s ease-in-out infinite both;
+}
+
+.dots-loader div:nth-child(1) { animation-delay: -0.32s; }
+.dots-loader div:nth-child(2) { animation-delay: -0.16s; }
+.dots-loader div:nth-child(3) { animation-delay: 0s; }
+
+@keyframes dotBounce {
+    0%, 80%, 100% {
+        transform: scale(0);
+    }
+    40% {
+        transform: scale(1);
+    }
+}
+
+.progress-bar {
+    width: 300px;
+    height: 8px;
+    background: #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--gradient-main);
+    width: 0%;
+    transition: width 0.3s ease;
+    border-radius: 4px;
+}
+
+.pulse-loader {
+    width: 60px;
+    height: 60px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+/* ============================================================================
+   PART 3: INTERACTIVE GAME
+   ============================================================================ */
+
+.game-container {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--success-color);
+}
+
+.game-info {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.game-area {
+    width: 400px;
+    height: 300px;
+    background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+    border-radius: var(--border-radius);
+    margin: 2rem auto;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid #ddd;
+}
+
+.moving-target {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: var(--danger-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-medium);
+}
+
+.moving-target:hover {
+    transform: scale(1.1);
+}
+
+.moving-target.caught {
+    animation: targetCaught 0.5s ease-in-out;
+}
+
+@keyframes targetCaught {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.5); background: var(--success-color); }
+    100% { transform: scale(0); opacity: 0; }
+}
+
+.game-controls {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+/* ============================================================================
+   PART 3: STATISTICS DASHBOARD
+   ============================================================================ */
+
+.stats-section {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.stat-card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    transition: all var(--transition-medium);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255,255,255,0.2);
+}
+
+.stat-card h3 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent-color);
+}
+
+.stat-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+.stat-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-color), white);
+    width: 0%;
+    transition: width 1s ease;
+    border-radius: 4px;
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .animated-title {
+        font-size: 2.5rem;
+    }
+    
+    .section {
+        padding: 2rem 1.5rem;
+    }
+    
+    .button-showcase {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .animation-showcase {
+        gap: 2rem;
+        padding: 2rem 1rem;
+    }
+    
+    .scope-display {
+        grid-template-columns: 1fr;
+    }
+    
+    .utility-demo {
+        grid-template-columns: 1fr;
+    }
+    
+    .card-flip-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .game-area {
+        width: 100%;
+        max-width: 350px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .input-group {
+        flex-direction: column;
+    }
+    
+    .text-buttons {
+        justify-content: center;
+    }
+}
